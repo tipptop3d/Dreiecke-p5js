@@ -5,27 +5,40 @@ var vector_ac;
 var new_vector;
 
 var pg;
+var points_count = 0;
+
+var button;
+var paused = false;
+
+function pause() {
+  paused = !paused;
+  button.html(paused ? 'Play' : 'Pause');
+}
 
 function setup() {
-  createCanvas(600, 600);
-  frameRate(30);
+  createCanvas(750, 700);
+  frameRate(60);
   textSize(40);
   textAlign(CENTER);
 
-  pg = createGraphics(600, 600);
-  pg.strokeWeight(5);
+  button = createButton('Pause');
+  button.size(100, 40);
+  button.mousePressed(pause);
+
+  pg = createGraphics(750, 700);
+  pg.strokeWeight(2);
 
   vectors = [
-    createVector(300, 40),
-    createVector(20, 580),
-    createVector(580, 580),
+    createVector(375, 20),
+    createVector(20, 680),
+    createVector(730, 680),
   ];
 
   pg.stroke('red');
   vectors.forEach(element => {
     pg.point(element);
   });
-  pg.stroke('black')
+  pg.stroke(240,240,240)
 
   vector_ab = p5.Vector.sub(vectors[1], vectors[0]);
   vector_ac = p5.Vector.sub(vectors[2], vectors[0]);
@@ -35,13 +48,18 @@ function setup() {
 }
 
 function draw() {
+  if (paused) {
+    return
+  }
   let random_point = random(vectors);
   old_vector = new_vector.copy();
   new_vector = p5.Vector.div(p5.Vector.sub(random_point, old_vector), 2);
   new_vector.add(old_vector);
   pg.point(new_vector);
-  background('white')
-  text(frameCount, 50, 10, 64, 64);
+  points_count += 1;
+  background(12,12,12);
+  fill(240, 240, 240);
+  text(points_count, 50, 10, 64, 64);
   image(pg, 0, 0);
 }
 
