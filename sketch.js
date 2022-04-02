@@ -14,14 +14,12 @@ var pausebutton;
 var paused = false;
 
 function pause() {
-  print('pause!!')
   paused = !paused;
   paused ? noLoop() : loop();
   pausebutton.html(paused ? 'PLAY' : 'PAUSE');
 }
 
 function reset() {
-  print('reset');
   pg.background(12, 12, 12, 255);
   points_count = 0;
 
@@ -82,11 +80,19 @@ function setup() {
 function draw() {
   frameRate(slider.value());
   let random_point = random(vectors);
-  old_vector = new_vector.copy();
-  // new vector from old point to corner, half length
-  new_vector = p5.Vector.div(p5.Vector.sub(random_point, old_vector), 2);
-  // add old vector so point is drawn from old point to corner
-  new_vector.add(old_vector);
+  point_to_corner = p5.Vector.div(p5.Vector.sub(random_point, new_vector), 2);
+  new_vector.add(point_to_corner);
+  switch (random_point) {
+    case vectors[0]:
+      pg.stroke('lime');
+      break;
+    case vectors[1]:
+      pg.stroke('fuchsia');
+      break;
+    case vectors[2]:
+      pg.stroke('cyan');
+      break;
+  }
   pg.point(new_vector);
   // counter
   points_count += 1;
