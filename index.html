@@ -1,22 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Sketch</title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Sketch</title>
 
-    <script src="libraries/p5.min.js"></script>
-    <script src="libraries/p5.sound.min.js"></script>
-  </head>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 
-  <body>
-    <div class="flex-container">
-      <h1>Interessante Dreiecke</h1>
-      <a href="https://github.com/tipptop3d/tipptop3d.github.io"><img src="GitHub-Mark-Light-64px.png" alt="Github", width="32px" class="gitlink"></a>
-    </div>
-    <script src="sketch.js"></script>
-  </body>
+  <script src="libraries/p5.min.js"></script>
+  <script src="libraries/p5.sound.min.js"></script>
+</head>
+
+<body>
+  <div class="flex-container">
+    <h1>Interessante Dreiecke</h1>
+    <a href="https://github.com/tipptop3d/tipptop3d.github.io">
+      <img src="GitHub-Mark-Light-64px.png" alt="Github" , width="32px" class="gitlink">
+    </a>
+  </div>
+  <div id="canvas"></div>
+  <div class="flex-container"">
+    <label for=" range1">Speed</label>
+    <div id="slider-container"></div>
+    <div id="pause-button"></div>
+    <div id="reset-button"></div>
+    <h3>von Tobey Knorr</h3>
+  </div>
+
+  <script src="sketch.js"></script>
+</body>
+
 </html>

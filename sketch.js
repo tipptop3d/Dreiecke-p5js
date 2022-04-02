@@ -4,30 +4,62 @@ var vector_ac;
 
 var new_vector;
 
+var canvas;
 var pg;
 var points_count = 0;
 
-var button;
+var slider;
+
+var pausebutton;
 var paused = false;
 
 function pause() {
+  print('pause!!')
   paused = !paused;
-  button.html(paused ? 'Play' : 'Pause');
+  paused ? noLoop() : loop();
+  pausebutton.html(paused ? 'PLAY' : 'PAUSE');
+}
+
+function reset() {
+  print('reset');
+  pg.background(12, 12, 12, 255);
+  points_count = 0;
+
+  pg.stroke('red');
+  vectors.forEach(element => {
+    pg.point(element);
+  });
+  pg.stroke(240,240,240)
+
+  redraw();
 }
 
 function setup() {
-  createCanvas(750, 700);
+  // init canvas
+  canvas = createCanvas(750, 700);
+  canvas.parent("canvas");
   frameRate(60);
   textSize(40);
   textAlign(CENTER);
 
-  button = createButton('Pause');
-  button.size(100, 40);
-  button.mousePressed(pause);
+  // init buttons
+  pausebutton = createButton(paused ? 'PLAY' : 'PAUSE');
+  pausebutton.parent("pause-button");
+  pausebutton.mouseClicked(pause);
+
+  let resetbutton = createButton('RESET');
+  resetbutton.parent('reset-button');
+  resetbutton.mouseClicked(reset);
+
+  slider = createSlider(1, 120, 60);
+  slider.parent("slider-container");
+  slider.class('slider');
+  slider.id('range1')
 
   pg = createGraphics(750, 700);
   pg.strokeWeight(2);
 
+  // init vectors and draw corner points
   vectors = [
     createVector(375, 20),
     createVector(20, 680),
@@ -48,19 +80,20 @@ function setup() {
 }
 
 function draw() {
-  if (paused) {
-    return
-  }
+  frameRate(slider.value());
   let random_point = random(vectors);
   old_vector = new_vector.copy();
+  // new vector from old point to corner, half length
   new_vector = p5.Vector.div(p5.Vector.sub(random_point, old_vector), 2);
+  // add old vector so point is drawn from old point to corner
   new_vector.add(old_vector);
   pg.point(new_vector);
+  // counter
   points_count += 1;
   background(12,12,12);
   fill(240, 240, 240);
-  text(points_count, 50, 10, 64, 64);
   image(pg, 0, 0);
+  text(points_count, 50, 10, 64, 64);
 }
 
 function random_vector(u, v) {
